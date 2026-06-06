@@ -1,24 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <!-- M5 - Permitindo tráfego HTTP em texto claro -->
+    <!-- M5 - Apenas permissão necessária -->
     <uses-permission android:name="android.permission.INTERNET"/>
 
-    <!-- M8 - Permissões excessivas desnecessárias para um app bancário -->
-    <uses-permission android:name="android.permission.READ_CONTACTS"/>
-    <uses-permission android:name="android.permission.READ_CALL_LOG"/>
-    <uses-permission android:name="android.permission.CAMERA"/>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
-
     <application
-        android:allowBackup="true"
+        android:allowBackup="false"
         android:label="VulnBank"
         android:theme="@style/Theme.VulnBank"
-        android:debuggable="true"
-        android:usesCleartextTraffic="true">
+        android:networkSecurityConfig="@xml/network_security_config">
 
-        <!-- Tela inicial - login -->
         <activity
             android:name=".LoginActivity"
             android:exported="true">
@@ -28,18 +19,18 @@
             </intent-filter>
         </activity>
 
-        <!-- M8 - Activities exportadas desnecessariamente -->
+        <!-- M8 - Activities internas não exportadas -->
         <activity
             android:name=".DashboardActivity"
-            android:exported="true"/>
+            android:exported="false"/>
 
         <activity
             android:name=".TransferActivity"
-            android:exported="true"/>
+            android:exported="false"/>
 
         <activity
             android:name=".ProfileActivity"
-            android:exported="true"/>
+            android:exported="false"/>
 
     </application>
 

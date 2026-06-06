@@ -6,6 +6,8 @@ import android.util.Log
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.security.crypto.EncryptedSharedPreferences
+import androidx.security.crypto.MasterKey
 
 class DashboardActivity : AppCompatActivity() {
 
@@ -13,16 +15,26 @@ class DashboardActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dashboard)
 
-        // M9 - Lendo dados sensíveis do SharedPreferences em texto claro
-        val prefs    = getSharedPreferences("vulnbank_prefs", MODE_PRIVATE)
+        // M9 - Leitura via EncryptedSharedPreferences
+        val masterKey = MasterKey.Builder(this)
+            .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
+            .build()
+
+        val prefs = EncryptedSharedPreferences.create(
+            this,
+            "vulnbank_prefs_secure",
+            masterKey,
+            EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
+            EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
+        )
+
         val username = prefs.getString("username", "")
-        val token    = prefs.getString("auth_token", "")
-        val password = prefs.getString("password", "")
 
-        // M6 - Expondo dados sensíveis no Logcat
-        Log.d("VulnBank", "Dashboard carregado - user: $username token: $token senha: $password")
+        // M6 - Log sem dados sensíveis
+        Log.d("VulnBank", "Dashboard carregado")
 
-        findViewById<TextView>(R.id.tvWelcome).text = "Bem-vindo, $username"
+        findViewById<TextView>(R.id.tvWelcome).text =
+            getString(R.string.welcome_message, username)
 
         findViewById<Button>(R.id.btnTransfer).setOnClickListener {
             startActivity(Intent(this, TransferActivity::class.java))

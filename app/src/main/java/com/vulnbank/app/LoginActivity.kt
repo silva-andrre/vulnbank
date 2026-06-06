@@ -7,13 +7,11 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import java.security.MessageDigest
+import androidx.security.crypto.EncryptedSharedPreferences
+import androidx.security.crypto.MasterKey
+import org.mindrot.jbcrypt.BCrypt
 
 class LoginActivity : AppCompatActivity() {
-
-    // M1 - Credenciais hardcoded no código-fonte
-    private val ADMIN_USER = "admin"
-    private val ADMIN_PASS = "admin123"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,38 +22,49 @@ class LoginActivity : AppCompatActivity() {
         val btnLogin   = findViewById<Button>(R.id.btnLogin)
 
         btnLogin.setOnClickListener {
-            val user = etUsername.text.toString()
+            val user = etUsername.text.toString().trim()
             val pass = etPassword.text.toString()
 
-            // M10 - Usando MD5 quebrado para comparar senha
-            if (user == ADMIN_USER && md5(pass) == md5(ADMIN_PASS)) {
+            // M4 - Validação de input
+            if (user.isBlank() || pass.isBlank()) {
+                Toast.makeText(this, "Preencha todos os campos", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
 
-                // M9 - Salvando dados sensíveis em texto claro no SharedPreferences
-                val prefs = getSharedPreferences("vulnbank_prefs", MODE_PRIVATE)
+            // M10 - BCrypt para verificação segura de senha
+            val storedHash = BCrypt.hashpw(BuildConfig.ADMIN_PASS, BCrypt.gensalt())
+
+            if (user == BuildConfig.ADMIN_USER && BCrypt.checkpw(pass, storedHash)) {
+
+                // M9 - EncryptedSharedPreferences
+                val masterKey = MasterKey.Builder(this)
+                    .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
+                    .build()
+
+                val prefs = EncryptedSharedPreferences.create(
+                    this,
+                    "vulnbank_prefs_secure",
+                    masterKey,
+                    EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
+                    EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
+                )
+
+                // M9 - Senha nunca armazenada
                 prefs.edit()
                     .putString("auth_token", "TOKEN_SECRETO_12345")
                     .putString("username", user)
-                    .putString("password", pass)
                     .apply()
 
-                // M6 - Logando credenciais em texto claro
-                Log.d("VulnBank", "Login OK - usuário: $user senha: $pass")
+                // M6 - Log sem dados sensíveis
+                Log.d("VulnBank", "Login realizado com sucesso")
 
                 startActivity(Intent(this, DashboardActivity::class.java))
                 finish()
 
             } else {
                 Toast.makeText(this, "Credenciais inválidas", Toast.LENGTH_SHORT).show()
-                // M6 - Logando tentativa de login com dados do usuário
-                Log.d("VulnBank", "Login FALHOU - tentativa: $user / $pass")
+                Log.d("VulnBank", "Tentativa de login inválida")
             }
         }
-    }
-
-    // M10 - MD5 é criptograficamente quebrado desde 2004
-    private fun md5(input: String): String {
-        val md = MessageDigest.getInstance("MD5")
-        return md.digest(input.toByteArray())
-            .joinToString("") { "%02x".format(it) }
     }
 }

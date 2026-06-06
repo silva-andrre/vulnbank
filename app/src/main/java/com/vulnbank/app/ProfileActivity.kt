@@ -4,29 +4,35 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.security.crypto.EncryptedSharedPreferences
+import androidx.security.crypto.MasterKey
 
 class ProfileActivity : AppCompatActivity() {
-
-    // M8 - Informações sensíveis de infraestrutura hardcoded
-    private val API_KEY          = "sk-vulnbank-prod-1234567890abcdef"
-    private val INTERNAL_API_URL = "http://internal.vulnbank.com/api/v1"
-    private val DB_CONNECTION    = "jdbc:mysql://192.168.1.100:3306/vulnbank_prod"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile)
 
-        val prefs    = getSharedPreferences("vulnbank_prefs", MODE_PRIVATE)
+        // M9 - Leitura via EncryptedSharedPreferences
+        val masterKey = MasterKey.Builder(this)
+            .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
+            .build()
+
+        val prefs = EncryptedSharedPreferences.create(
+            this,
+            "vulnbank_prefs_secure",
+            masterKey,
+            EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
+            EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
+        )
+
         val username = prefs.getString("username", "")
 
-        // M8 - Exibindo informações internas de configuração na UI
-        findViewById<TextView>(R.id.tvProfile).text = """
-            Usuário: $username
-            API Key: $API_KEY
-            Servidor: $INTERNAL_API_URL
-        """.trimIndent()
+        // M1 + M8 - Sem informações sensíveis de infraestrutura
+        findViewById<TextView>(R.id.tvProfile).text =
+            getString(R.string.profile_username, username)
 
-        // M6 - Logando configurações sensíveis de infraestrutura
-        Log.d("VulnBank", "Profile - API_KEY: $API_KEY DB: $DB_CONNECTION")
+        // M6 - Log sem dados sensíveis
+        Log.d("VulnBank", "Perfil carregado")
     }
 }
