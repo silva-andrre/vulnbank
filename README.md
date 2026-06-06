@@ -151,7 +151,7 @@ O autor não se responsabiliza pelo uso indevido deste material. Utilize apenas 
 
 **André Nascimento**
 - Medium: [@andrre](https://medium.com/@andrre)
-- LinkedIn: [linkedin.com/in/andrre](https://linkedin.com/in/andrre)
+- LinkedIn: [linkedin.com/in/nascimento-andrre](https://www.linkedin.com/in/nascimento-andrre/)
 
 ---
 
