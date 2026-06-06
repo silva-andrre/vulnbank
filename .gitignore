@@ -1,0 +1,39 @@
+# Android
+*.iml
+.gradle
+/local.properties
+/.idea
+.DS_Store
+/build
+/captures
+.externalNativeBuild
+.cxx
+local.properties
+
+# APK files
+*.apk
+*.aab
+
+# Keystore files - NEVER commit these
+*.jks
+*.keystore
+
+# Gradle
+.gradle/
+build/
+gradle-app.setting
+!gradle-wrapper.jar
+.gradletasknamecache
+
+# IntelliJ / Android Studio
+*.iml
+*.ipr
+.idea/
+out/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Dependency Check reports
+dependency-check-report*

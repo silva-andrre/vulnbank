@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- M5 - Permitindo tráfego HTTP em texto claro -->
+    <uses-permission android:name="android.permission.INTERNET"/>
+
+    <!-- M8 - Permissões excessivas desnecessárias para um app bancário -->
+    <uses-permission android:name="android.permission.READ_CONTACTS"/>
+    <uses-permission android:name="android.permission.READ_CALL_LOG"/>
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
+
+    <application
+        android:allowBackup="true"
+        android:label="VulnBank"
+        android:theme="@style/Theme.VulnBank"
+        android:debuggable="true"
+        android:usesCleartextTraffic="true">
+
+        <!-- Tela inicial - login -->
+        <activity
+            android:name=".LoginActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+
+        <!-- M8 - Activities exportadas desnecessariamente -->
+        <activity
+            android:name=".DashboardActivity"
+            android:exported="true"/>
+
+        <activity
+            android:name=".TransferActivity"
+            android:exported="true"/>
+
+        <activity
+            android:name=".ProfileActivity"
+            android:exported="true"/>
+
+    </application>
+
+</manifest>
