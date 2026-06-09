@@ -26,8 +26,6 @@ O projeto cobre o ciclo completo de segurança mobile:
 | 5 | Corrigindo como um AppSec | [Medium](https://medium.com/@andrre/vulnbank-uma-abordagem-pr%C3%A1tica-de-mobile-security-pt-5-920806d4f0d8) |
 | 6 | Percepções e Aprendizados | [Medium](https://medium.com/@andrre/vulnbank-uma-abordagem-pr%C3%A1tica-de-mobile-security-pt-6-e3d4a87ffd87) |
 
-> Substitua os links `[Medium](#)` pelos URLs reais após a publicação.
-
 ---
 
 ## 🔟 Vulnerabilidades Implementadas
