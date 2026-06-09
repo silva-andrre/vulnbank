@@ -19,12 +19,12 @@ O projeto cobre o ciclo completo de segurança mobile:
 
 | Parte | Título | Link |
 |---|---|---|
-| 1 | O Estudo — Como posso aprender a teoria de forma prática? | [Medium](#) |
-| 2 | Construindo o Laboratório | [Medium](#) |
-| 3 | Criando as Vulnerabilidades | [Medium](#) |
-| 4 | Explorando como um Atacante | [Medium](#) |
-| 5 | Corrigindo como um AppSec | [Medium](#) |
-| 6 | Percepções e Aprendizados | [Medium](#) |
+| 1 | O Estudo — Como posso aprender a teoria de forma prática? | [Medium](https://medium.com/@andrre/vulnbank-uma-abordagem-pr%C3%A1tica-de-mobile-security-a0685119856f) |
+| 2 | Construindo o Laboratório | [Medium](https://medium.com/@andrre/vulnbank-uma-abordagem-pr%C3%A1tica-de-mobile-security-pt-2-ff9e51089642) |
+| 3 | Criando as Vulnerabilidades | [Medium](https://medium.com/@andrre/vulnbank-uma-abordagem-pr%C3%A1tica-de-mobile-security-pt-3-dda8783f3429) |
+| 4 | Explorando como um Atacante | [Medium](https://medium.com/@andrre/vulnbank-uma-abordagem-pr%C3%A1tica-de-mobile-security-pt-4-ddb3dda38eb4) |
+| 5 | Corrigindo como um AppSec | [Medium](https://medium.com/@andrre/vulnbank-uma-abordagem-pr%C3%A1tica-de-mobile-security-pt-5-920806d4f0d8) |
+| 6 | Percepções e Aprendizados | [Medium](https://medium.com/@andrre/vulnbank-uma-abordagem-pr%C3%A1tica-de-mobile-security-pt-6-e3d4a87ffd87) |
 
 > Substitua os links `[Medium](#)` pelos URLs reais após a publicação.
 
